@@ -64,18 +64,20 @@
             const logo = document.getElementById('custom-logo');
             const fallbackIcon = document.getElementById('dynamic-logo-icon');
             const fallbackText = document.getElementById('dynamic-logo-text');
+            
             if (logo) logo.classList.remove('hidden');
-            if (fallbackIcon) fallbackIcon.classList.add('hidden');
-            if (fallbackText) fallbackText.classList.add('hidden');
+            if (fallbackIcon) fallbackIcon.classList.add('hidden'); // Hide the generic placeholder icon
+            if (fallbackText) fallbackText.classList.remove('hidden'); // ALWAYS keep the brand text visible beside the logo!
         }
 
         function handleLogoError() {
             const logo = document.getElementById('custom-logo');
             const fallbackIcon = document.getElementById('dynamic-logo-icon');
             const fallbackText = document.getElementById('dynamic-logo-text');
+            
             if (logo) logo.classList.add('hidden');
-            if (fallbackIcon) fallbackIcon.classList.remove('hidden');
-            if (fallbackText) fallbackText.classList.remove('hidden');
+            if (fallbackIcon) fallbackIcon.classList.remove('hidden'); // Show the generic placeholder icon as fallback
+            if (fallbackText) fallbackText.classList.remove('hidden'); // Keep the brand text visible
         }
     </script>
 </head>
@@ -87,7 +89,7 @@
             <div class="flex items-center justify-between h-20">
                 
                 <!-- Logo Block -->
-                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="resetFilters()">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="resetFilters()">
                     
                     <!-- 1. DYNAMIC IMAGE LOGO (Auto-detects logo.png in repository) -->
                     <img id="custom-logo" src="logo.png" alt="Standardized Life Logo" class="h-10 w-auto object-contain hidden" onload="handleLogoLoaded()" onerror="handleLogoError()">
@@ -95,11 +97,11 @@
                     <!-- 2. DEFAULT FALLBACK DYNAMIC ICON (Visible only if logo.png doesn't exist) -->
                     <div id="dynamic-logo-icon" class="w-10 h-10 bg-premium-accent/10 border border-premium-accent/30 rounded-xl flex items-center justify-center text-premium-accent">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138z"/>
                         </svg>
                     </div>
 
-                    <!-- 3. BRAND TEXT TITLE (Visible only if logo.png doesn't exist) -->
+                    <!-- 3. BRAND TEXT TITLE (Always visible side-by-side with either your custom logo OR fallback icon) -->
                     <div id="dynamic-logo-text" class="flex flex-col">
                         <span class="text-base sm:text-lg font-black tracking-wider text-white leading-none">
                             STANDARDIZED
@@ -1134,6 +1136,7 @@
             document.body.classList.add('overflow-hidden');
         }
 
+        // Close details modal
         function closeProductModal() {
             const modal = document.getElementById('product-modal');
             modal.classList.add('hidden');
@@ -1303,6 +1306,15 @@
                 hamburger.classList.remove('hidden');
                 close.classList.add('hidden');
             }
+        }
+
+        // Clear all saved wishlist helper
+        function clearAllWishlist() {
+            wishlist = [];
+            localStorage.setItem('standardized_life_wishlist', JSON.stringify(wishlist));
+            updateWishlistBadge();
+            applyFilters();
+            renderWishlistItems();
         }
     </script>
 </body>
