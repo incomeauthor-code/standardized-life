@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standardized Life | Curated Premium Watches, Sunglasses & Caps</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        premium: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                            950: '#0a0a0a',
+                            accent: '#d97706', /* Amber-600 premium accent */
+                            accentHover: '#b45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom smooth scroll and scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #171717;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #404040;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d97706;
+        }
+    </style>
+</head>
+<body class="bg-premium-950 text-neutral-100 font-sans min-h-screen selection:bg-premium-accent selection:text-white flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-premium-950/90 backdrop-blur-md border-b border-premium-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="resetFilters()">
+                    <span class="text-xl sm:text-2xl font-extrabold tracking-wider bg-gradient-to-r from-white via-premium-300 to-premium-accent bg-clip-text text-transparent">
+                        STANDARDIZED LIFE
+                    </span>
+                    <span class="text-[10px] tracking-widest text-premium-accent border border-premium-accent/40 rounded px-1.5 py-0.5 uppercase hidden sm:inline-block">Affiliate Hub</span>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <button onclick="filterCategory('all')" class="hover:text-premium-accent transition-colors py-2 text-neutral-300">All Collections</button>
+                    <button onclick="filterCategory('watches')" class="hover:text-premium-accent transition-colors py-2 text-neutral-300">Watches</button>
+                    <button onclick="filterCategory('goggles')" class="hover:text-premium-accent transition-colors py-2 text-neutral-300">Goggles</button>
+                    <button onclick="filterCategory('caps')" class="hover:text-premium-accent transition-colors py-2 text-neutral-300">Caps</button>
+                    <a href="#about-disclosure" class="hover:text-premium-accent transition-colors py-2 text-neutral-400 text-xs tracking-wider uppercase">FTC Disclosure</a>
+                </nav>
+
+                <!-- Action Utilities (Search, Wishlist, Mobile menu trigger) -->
+                <div class="flex items-center space-x-4">
+                    <!-- Wishlist Status Button -->
+                    <button onclick="toggleWishlistDrawer()" class="relative p-2 text-neutral-300 hover:text-premium-accent transition-colors rounded-full hover:bg-premium-900 focus:outline-none" aria-label="View Wishlist">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                        <span id="wishlist-badge" class="absolute -top-1 -right-1 bg-premium-accent text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+                    </button>
+
+                    <!-- Mobile Navigation Menu Toggle -->
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 text-neutral-300 hover:text-premium-accent transition-colors rounded-full hover:bg-premium-900" aria-label="Toggle Menu">
+                        <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-premium-800 bg-premium-950/95 px-4 pt-4 pb-6 space-y-3 transition-all duration-300">
+            <button onclick="filterCategory('all'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-neutral-200 hover:bg-premium-900 hover:text-premium-accent font-medium">All Collections</button>
+            <button onclick="filterCategory('watches'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-neutral-200 hover:bg-premium-900 hover:text-premium-accent font-medium">Watches</button>
+            <button onclick="filterCategory('goggles'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-neutral-200 hover:bg-premium-900 hover:text-premium-accent font-medium">Goggles</button>
+            <button onclick="filterCategory('caps'); toggleMobileMenu()" class="block w-full text-left px-4 py-2.5 rounded-lg text-neutral-200 hover:bg-premium-900 hover:text-premium-accent font-medium">Caps</button>
+            <hr class="border-premium-800 my-2">
+            <a href="#about-disclosure" onclick="toggleMobileMenu()" class="block px-4 py-2 text-xs uppercase tracking-wider text-premium-400 hover:text-premium-accent">FTC Affiliate Disclosure</a>
+        </div>
+    </header>
+
+    <!-- Hero Banner Carousel / Section -->
+    <section class="relative bg-premium-900 overflow-hidden border-b border-premium-800">
+        <!-- Background Accent Gradients -->
+        <div class="absolute inset-0 bg-gradient-to-r from-premium-950 via-premium-900/40 to-premium-950 z-10"></div>
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-premium-accent/10 rounded-full blur-[120px]"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 relative z-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6 text-left">
+                    <div class="inline-flex items-center gap-2 bg-premium-800 border border-premium-700 rounded-full px-4 py-1.5 text-xs text-premium-accent font-semibold tracking-wider uppercase">
+                        <span>🔥 High Demand Handpicked Gear</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none text-white">
+                        Elevate Your Daily <br class="hidden sm:inline">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-premium-accent to-yellow-500">Everyday Carry</span>
+                    </h1>
+                    <p class="text-neutral-400 text-base sm:text-lg max-w-2xl font-light">
+                        Discover curated masterpieces: from ultra-accurate luxury & hybrid watches, sleek polarized goggles, to street-approved caps. Handpicked styles vetted for ultimate form and function.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#store-listings" class="bg-premium-accent hover:bg-premium-accentHover text-white px-8 py-3.5 rounded-xl font-semibold transition-all shadow-lg hover:shadow-premium-accent/20 hover:-translate-y-0.5 inline-flex items-center gap-2">
+                            Browse Collection
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+                        <button onclick="scrollToFilter('watches')" class="bg-premium-800 hover:bg-premium-700 text-neutral-100 px-6 py-3.5 rounded-xl font-medium transition-all inline-flex items-center gap-2 border border-premium-700">
+                            Explore Watches
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Showcase Images / SVG Badge Feature -->
+                <div class="lg:col-span-5 relative flex justify-center items-center">
+                    <div class="relative w-80 h-80 sm:w-96 sm:h-96 rounded-3xl bg-gradient-to-tr from-premium-accent/20 to-premium-800/80 p-6 flex flex-col justify-between border border-premium-700/60 shadow-2xl">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs bg-premium-accent/20 text-premium-accent font-semibold px-2.5 py-1 rounded">DEAL OF THE MONTH</span>
+                            <span class="text-neutral-400 text-sm">Standardized Life Selects</span>
+                        </div>
+                        <div class="text-center py-4">
+                            <!-- Visual Graphic using crisp SVGs instead of heavy broken image tags -->
+                            <div class="mx-auto text-premium-accent mb-4 w-28 h-28 flex items-center justify-center bg-premium-950/80 rounded-full border border-premium-800 shadow-inner">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Chrono Stealth Automatic</h3>
+                            <p class="text-xs text-neutral-400 mt-1">Premium Seiko-Movement Watch</p>
+                        </div>
+                        <div class="flex items-center justify-between bg-premium-950/90 p-3.5 rounded-2xl border border-premium-800">
+                            <div>
+                                <span class="text-xs text-premium-400 line-through block">$349.00</span>
+                                <span class="text-lg font-bold text-premium-accent">$219.00</span>
+                            </div>
+                            <button onclick="openProductModal(1)" class="bg-premium-accent hover:bg-premium-accentHover text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors">
+                                View Deal &rarr;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature highlights (Trust badges for affiliate hub) -->
+    <section class="bg-premium-950 border-b border-premium-800 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-premium-900/40 border border-premium-800 text-left">
+                    <div class="p-3 rounded-lg bg-premium-accent/10 text-premium-accent">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Vetted & Recommended</h4>
+                        <p class="text-xs text-neutral-400">Only top-tier merchants & products.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-premium-900/40 border border-premium-800 text-left">
+                    <div class="p-3 rounded-lg bg-premium-accent/10 text-premium-accent">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Exclusive Deals</h4>
+                        <p class="text-xs text-neutral-400">Direct discount link tracking.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-premium-900/40 border border-premium-800 text-left">
+                    <div class="p-3 rounded-lg bg-premium-accent/10 text-premium-accent">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Zero Fee Platform</h4>
+                        <p class="text-xs text-neutral-400">100% free recommendations for you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Main Store Section -->
+    <main id="store-listings" class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <!-- Section Title & Meta -->
+        <div class="text-center md:text-left mb-10">
+            <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                The Selected Catalog
+            </h2>
+            <p class="mt-2 text-neutral-400 text-sm max-w-xl">
+                Refine our premier collection of mechanical wristwatches, polarized eye protection, and robust outdoor/streetwear headwear.
+            </p>
+        </div>
+
+        <!-- Filter Controls Container -->
+        <div class="bg-premium-900 rounded-2xl border border-premium-800 p-6 mb-8 space-y-4">
+            <!-- Search & Filter Category Row -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                <!-- Live Search Bar -->
+                <div class="md:col-span-4 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <input type="text" id="product-search" oninput="applyFilters()" placeholder="Search gear, brand or specs..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-premium-950 border border-premium-800 text-sm text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-premium-accent focus:border-transparent transition-all">
+                </div>
+
+                <!-- Category Filters (Watches, Goggles, Caps) -->
+                <div class="md:col-span-5 flex flex-wrap gap-2">
+                    <button onclick="filterCategory('all')" id="btn-cat-all" class="cat-btn active px-4 py-2 text-xs font-semibold rounded-xl border border-premium-accent bg-premium-accent text-white transition-all">
+                        All
+                    </button>
+                    <button onclick="filterCategory('watches')" id="btn-cat-watches" class="cat-btn px-4 py-2 text-xs font-semibold rounded-xl border border-premium-800 hover:border-premium-600 bg-premium-950/40 text-neutral-300 transition-all">
+                        Watches
+                    </button>
+                    <button onclick="filterCategory('goggles')" id="btn-cat-goggles" class="cat-btn px-4 py-2 text-xs font-semibold rounded-xl border border-premium-800 hover:border-premium-600 bg-premium-950/40 text-neutral-300 transition-all">
+                        Goggles
+                    </button>
+                    <button onclick="filterCategory('caps')" id="btn-cat-caps" class="cat-btn px-4 py-2 text-xs font-semibold rounded-xl border border-premium-800 hover:border-premium-600 bg-premium-950/40 text-neutral-300 transition-all">
+                        Caps
+                    </button>
+                </div>
+
+                <!-- Sorting Dropdown -->
+                <div class="md:col-span-3">
+                    <select id="sort-select" onchange="applyFilters()" class="w-full px-4 py-2.5 rounded-xl bg-premium-950 border border-premium-800 text-sm text-neutral-300 focus:outline-none focus:ring-2 focus:ring-premium-accent transition-all">
+                        <option value="featured">Sort by: Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="rating">Rating: Top Rated</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Price Range Filter Slider -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-2 border-t border-premium-800 gap-4">
+                <div class="flex items-center gap-4 w-full max-w-md">
+                    <span class="text-xs text-neutral-400 font-medium whitespace-nowrap">Max Price Limit:</span>
+                    <input type="range" id="price-slider" min="15" max="400" value="400" oninput="updatePriceLabel(this.value)" class="w-full accent-premium-accent h-1 bg-premium-950 rounded-lg cursor-pointer">
+                    <span id="price-limit-val" class="text-xs font-bold text-premium-accent whitespace-nowrap">$400</span>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="resetFilters()" class="text-xs text-neutral-400 hover:text-white transition-colors underline underline-offset-4">
+                        Reset Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Catalog Listing Grid -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamically populated in JS -->
+        </div>
+
+        <!-- No Results Fallback View -->
+        <div id="no-results-view" class="hidden flex-col items-center justify-center py-20 text-center bg-premium-900 rounded-3xl border border-premium-800 p-8">
+            <div class="text-premium-accent mb-4">
+                <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white">No products found</h3>
+            <p class="text-neutral-400 text-sm mt-1 max-w-xs mx-auto">Try refining your search terms, modifying your price range slider, or selecting another category.</p>
+            <button onclick="resetFilters()" class="mt-6 bg-premium-accent hover:bg-premium-accentHover text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all">
+                Reset Filters
+            </button>
+        </div>
+    </main>
+
+    <!-- Product Detail Overlay / Modal -->
+    <div id="product-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-premium-950/80 backdrop-blur-md">
+        <div class="bg-premium-900 border border-premium-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl overflow-y-auto max-h-[90vh]">
+            <!-- Close Trigger -->
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-white p-2 hover:bg-premium-800 rounded-full transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+
+            <div id="modal-content" class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-4">
+                <!-- Left: SVG Placeholder Graphics Showcase -->
+                <div class="flex flex-col items-center justify-center bg-premium-950 rounded-2xl p-6 border border-premium-800 min-h-[220px]">
+                    <div id="modal-product-icon" class="text-premium-accent w-24 h-24 mb-4 flex items-center justify-center">
+                        <!-- Filled by JS -->
+                    </div>
+                    <span id="modal-product-badge" class="text-[10px] tracking-widest text-premium-accent border border-premium-accent/40 rounded px-2 py-0.5 uppercase">
+                        Premium Quality
+                    </span>
+                </div>
+
+                <!-- Right: Content Information -->
+                <div class="flex flex-col justify-between">
+                    <div>
+                        <span id="modal-product-category" class="text-xs text-premium-accent uppercase tracking-wider font-semibold">Category</span>
+                        <h3 id="modal-product-name" class="text-2xl font-bold text-white mt-1">Product Title</h3>
+                        
+                        <!-- Product rating and statistics -->
+                        <div class="flex items-center gap-2 mt-2">
+                            <div class="flex text-amber-500 text-sm" id="modal-product-stars">
+                                <!-- Filled by JS -->
+                            </div>
+                            <span id="modal-product-rating-text" class="text-xs text-neutral-400 font-medium">4.8 (120 reviews)</span>
+                        </div>
+
+                        <p id="modal-product-desc" class="text-neutral-300 text-sm mt-4 leading-relaxed">
+                            Deeply analytical description curated exclusively by Standardized Life. Crafted with premium materials, built to satisfy high performance standards.
+                        </p>
+
+                        <!-- Highlights list -->
+                        <ul id="modal-product-specs" class="mt-4 space-y-1.5 text-xs text-neutral-400 list-disc list-inside">
+                            <!-- Filled dynamically -->
+                        </ul>
+                    </div>
+
+                    <!-- Pricing & Buy trigger -->
+                    <div class="mt-6 pt-4 border-t border-premium-800">
+                        <div class="flex items-baseline justify-between mb-4">
+                            <span class="text-xs text-neutral-400 uppercase tracking-widest font-semibold">Deal Price</span>
+                            <div class="flex items-baseline gap-2">
+                                <span id="modal-product-original-price" class="text-xs text-neutral-500 line-through">$0.00</span>
+                                <span id="modal-product-price" class="text-2xl font-black text-white">$0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- CTA Dynamic Action Affiliate Button -->
+                        <button id="modal-affiliate-btn" onclick="" class="w-full bg-premium-accent hover:bg-premium-accentHover text-white py-3.5 px-6 rounded-xl font-bold transition-all shadow-lg text-center inline-flex items-center justify-center gap-2">
+                            <span>Get Deal on Merchant Shop</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                            </svg>
+                        </button>
+                        
+                        <!-- FTC warning banner within CTA context -->
+                        <p class="text-[10px] text-neutral-500 mt-2 text-center">
+                            * Clicking redirects you to our verified merchant partner. As an affiliate, we earn a tiny commission.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drawer sidebar for saved Wishlist items -->
+    <div id="wishlist-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-premium-900 border-l border-premium-800 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="p-6 h-full flex flex-col justify-between">
+            <div>
+                <!-- Header with Close command -->
+                <div class="flex items-center justify-between pb-4 border-b border-premium-800">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <svg class="w-5 h-5 text-premium-accent" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
+                        </svg>
+                        Your Saved Gear (<span id="wishlist-count-inner">0</span>)
+                    </h3>
+                    <button onclick="toggleWishlistDrawer()" class="p-2 text-neutral-400 hover:text-white rounded-full hover:bg-premium-800 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Scrollable saved items container -->
+                <div id="wishlist-items-container" class="mt-4 space-y-4 overflow-y-auto max-h-[60vh] pr-1">
+                    <!-- Wishlist items are injected here dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Footer block of drawer -->
+            <div class="pt-6 border-t border-premium-800 space-y-4">
+                <p class="text-xs text-neutral-400">
+                    Items are saved automatically to your device for easy retrieval when you wish to compare or finalize purchases.
+                </p>
+                <button onclick="clearAllWishlist()" class="w-full py-2.5 text-xs text-neutral-400 hover:text-white bg-premium-950 border border-premium-800 hover:border-premium-700 rounded-xl transition-all">
+                    Clear All Saved Items
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transition/Redirecting Overlay Screen -->
+    <div id="redirect-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4 bg-premium-950/95">
+        <div class="text-center max-w-sm p-8 bg-premium-900 border border-premium-800 rounded-3xl shadow-2xl space-y-6">
+            <div class="relative w-24 h-24 mx-auto">
+                <!-- Circular loader spinner -->
+                <div class="absolute inset-0 rounded-full border-4 border-premium-800"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-t-premium-accent animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center font-bold text-xl text-white" id="redirect-countdown">3</div>
+            </div>
+            
+            <div class="space-y-2">
+                <h3 class="text-xl font-bold text-white">Redirecting to Partner Store</h3>
+                <p class="text-xs text-neutral-400 px-4">
+                    Securing the best available commission & promotional price tracking...
+                </p>
+            </div>
+
+            <div class="bg-premium-950/80 p-3.5 rounded-2xl border border-premium-800/80">
+                <p id="redirect-product-name" class="text-xs font-semibold text-white">Product Title</p>
+                <span id="redirect-product-price" class="text-xs text-premium-accent font-bold mt-1 block">$0.00</span>
+            </div>
+
+            <p class="text-[10px] text-neutral-500">
+                Standardized Life protects purchase integrity. You will always land on secure, verified checkout pages.
+            </p>
+
+            <button id="skip-countdown-btn" onclick="" class="inline-flex items-center gap-1.5 text-xs text-neutral-400 hover:text-white underline underline-offset-4">
+                Skip waiting and go now &rarr;
+            </button>
+        </div>
+    </div>
+
+    <!-- Styling Lookbook Section (Curated styling combinations) -->
+    <section class="bg-premium-900/40 border-t border-b border-premium-800 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-xs text-premium-accent uppercase tracking-widest font-semibold">Standardized Life Signature Outfits</span>
+                <h3 class="text-2xl sm:text-3xl font-bold text-white mt-1">Matched Gear Styles</h3>
+                <p class="text-xs sm:text-sm text-neutral-400 mt-2 max-w-md mx-auto">Handpicked matching elements configured for a cohesive aesthetic signature look.</p>
+            </div>
+
+            <!-- Preconfigured Style Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Look 1 -->
+                <div class="bg-premium-950 border border-premium-800 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="text-[10px] bg-premium-accent/10 text-premium-accent font-semibold px-2 py-0.5 rounded">01 / EXECUTIVE CHARM</span>
+                        <h4 class="text-lg font-bold text-white mt-3">The Sleek Urbanite</h4>
+                        <p class="text-xs text-neutral-400 mt-1">Engineered for architectural landscapes, high-rise dynamic offices, and luxury settings.</p>
+                        
+                        <div class="mt-6 space-y-3">
+                            <div class="flex items-center justify-between text-xs py-2 border-b border-premium-800/50">
+                                <span class="text-neutral-400">Classic Chrono Watch</span>
+                                <span class="text-white font-semibold">$249.00</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs py-2 border-b border-premium-800/50">
+                                <span class="text-neutral-400">Dark Matte Wayfarers</span>
+                                <span class="text-white font-semibold">$75.00</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs py-2">
+                                <span class="text-neutral-400">Distressed Cotton Dad Hat</span>
+                                <span class="text-white font-semibold">$29.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="quickFilterCombination(['1', '5', '7'])" class="mt-8 w-full bg-premium-900 hover:bg-premium-800 border border-premium-800 text-neutral-200 text-xs font-semibold py-2.5 rounded-xl transition-all">
+                        View Combined Outfit Details
+                    </button>
+                </div>
+
+                <!-- Look 2 -->
+                <div class="bg-premium-950 border border-premium-800 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="text-[10px] bg-premium-accent/10 text-premium-accent font-semibold px-2 py-0.5 rounded">02 / SPORT PERFORMANCE</span>
+                        <h4 class="text-lg font-bold text-white mt-3">The Stealth Athlete</h4>
+                        <p class="text-xs text-neutral-400 mt-1">Maximum versatility designed for rigorous performance running, trails, and active weekends.</p>
+                        
+                        <div class="mt-6 space-y-3">
+                            <div class="flex items-center justify-between text-xs py-2 border-b border-premium-800/50">
+                                <span class="text-neutral-400">Tactical Sport Chrono</span>
+                                <span class="text-white font-semibold">$129.00</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs py-2 border-b border-premium-800/50">
+                                <span class="text-neutral-400">Cyber Shield Sunglasses</span>
+                                <span class="text-white font-semibold">$110.00</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs py-2">
+                                <span class="text-neutral-400">Waterproof Runner Cap</span>
+                                <span class="text-white font-semibold">$39.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="quickFilterCombination(['2', '6', '9'])" class="mt-8 w-full bg-premium-900 hover:bg-premium-800 border border-premium-800 text-neutral-200 text-xs font-semibold py-2.5 rounded-xl transition-all">
+                        View Combined Outfit Details
+                    </button>
+                </div>
+
+                <!-- Look 3 -->
+                <div class="bg-premium-950 border border-premium-800 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="text-[10px] bg-premium-accent/10 text-premium-accent font-semibold px-2 py-0.5 rounded">03 / COASTAL DRIFT</span>
+                        <h4 class="text-lg font-bold text-white mt-3">The Laid-Back Voyager</h4>
+                        <p class="text-xs text-neutral-400 mt-1">Lightweight accessories matching direct sunlight and nautical ocean breezes perfectly.</p>
+                        
+                        <div class="mt-6 space-y-3">
+                            <div class="flex items-center justify-between text-xs py-2 border-b border-premium-800/50">
+                                <span class="text-neutral-400">Minimalist Sand Gold Watch</span>
+                                <span class="text-white font-semibold">$189.00</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs py-2 border-b border-premium-800/50">
+                                <span class="text-neutral-400">Aviator Classic Polarized</span>
+                                <span class="text-white font-semibold">$89.00</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs py-2">
+                                <span class="text-neutral-400">Streetwear Trucker Mesh Cap</span>
+                                <span class="text-white font-semibold">$34.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="quickFilterCombination(['3', '4', '8'])" class="mt-8 w-full bg-premium-900 hover:bg-premium-800 border border-premium-800 text-neutral-200 text-xs font-semibold py-2.5 rounded-xl transition-all">
+                        View Combined Outfit Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story & Promotional Subscription Box -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="bg-gradient-to-br from-premium-900 to-premium-950 border border-premium-800 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+            <!-- Decorative Accent Elements -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-premium-accent/5 rounded-full blur-[60px]"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <span class="text-xs text-premium-accent tracking-wider font-semibold uppercase">Exclusive Direct Pricing Alerts</span>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
+                        Be the first to secure early limited-edition drops and premium promo codes.
+                    </h3>
+                    <p class="text-xs sm:text-sm text-neutral-400 max-w-md">
+                        We send clean, high-value newsletters containing merchant promo codes, custom price drops, and seasonal style recommendations twice per month. Zero spam, ever.
+                    </p>
+                </div>
+                <div>
+                    <form onsubmit="handleSubscribe(event)" class="space-y-3">
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input type="email" id="subscribe-email" required placeholder="Enter your best personal email..." class="flex-grow px-4 py-3 rounded-xl bg-premium-950 border border-premium-800 text-sm text-white focus:outline-none focus:ring-2 focus:ring-premium-accent">
+                            <button type="submit" class="bg-premium-accent hover:bg-premium-accentHover text-white px-6 py-3 rounded-xl font-bold transition-all text-sm whitespace-nowrap">
+                                Join Standardized Life Club
+                            </button>
+                        </div>
+                        <p class="text-[10px] text-neutral-500">
+                            By clicking, you consent to our privacy terms. Unsubscribe gracefully inside any newsletter footer.
+                        </p>
+                    </form>
+                    <div id="subscribe-success-msg" class="hidden mt-3 p-3 bg-green-950/40 border border-green-800/50 rounded-lg text-green-400 text-xs font-medium">
+                        ✓ Subscription secure! Welcome to the elite Standardized Life catalog drops. Check your inbox for updates.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="about-disclosure" class="bg-premium-950 border-t border-premium-800 mt-auto pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-premium-800">
+                <!-- Brand Meta -->
+                <div class="md:col-span-4 space-y-4">
+                    <span class="text-xl font-black text-white tracking-widest">STANDARDIZED LIFE</span>
+                    <p class="text-xs text-neutral-400 leading-relaxed">
+                        Curating and analyzing elite accessories for style-forward individuals. We partner exclusively with top-tier international merchant platforms and certified checkout providers.
+                    </p>
+                    <div class="flex space-x-4">
+                        <!-- Custom Inline Social SVGs for absolute safety and zero heavy assets -->
+                        <a href="#" class="text-neutral-400 hover:text-premium-accent transition-colors" aria-label="Follow us on Twitter">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                        </a>
+                        <a href="#" class="text-neutral-400 hover:text-premium-accent transition-colors" aria-label="Follow us on Instagram">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Fast Links -->
+                <div class="md:col-span-3 space-y-3 text-xs sm:text-sm">
+                    <h4 class="font-bold text-white uppercase tracking-wider">Fast Navigation</h4>
+                    <ul class="space-y-2">
+                        <li><button onclick="filterCategory('all')" class="text-neutral-400 hover:text-white transition-all text-left">All Curated Gear</button></li>
+                        <li><button onclick="filterCategory('watches')" class="text-neutral-400 hover:text-white transition-all text-left">Luxury & Sport Watches</button></li>
+                        <li><button onclick="filterCategory('goggles')" class="text-neutral-400 hover:text-white transition-all text-left">Polarized Goggles</button></li>
+                        <li><button onclick="filterCategory('caps')" class="text-neutral-400 hover:text-white transition-all text-left">Premium Cap Selection</button></li>
+                    </ul>
+                </div>
+
+                <!-- Dynamic Contact / Support info placeholder -->
+                <div class="md:col-span-5 space-y-4">
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider">Editorial & Business Contact</h4>
+                    <p class="text-xs text-neutral-400">
+                        Have queries regarding our recommended merchant links, partner opportunities, or want your premium lifestyle product reviewed?
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <span class="text-xs bg-premium-900 border border-premium-800 px-3 py-2 rounded-lg text-neutral-300">
+                            ✉ Email: partnerships@standardizedlife.com
+                        </span>
+                        <span class="text-xs bg-premium-900 border border-premium-800 px-3 py-2 rounded-lg text-neutral-300">
+                            ⏱ Response within: 24-48 Hours
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FTC Affiliate Marketing Disclosure -->
+            <div class="pt-8 space-y-4 text-[11px] text-neutral-400 leading-relaxed text-center md:text-left">
+                <div class="bg-premium-900/40 border border-premium-800 p-4 rounded-xl">
+                    <span class="font-bold text-premium-accent uppercase tracking-wider block mb-1">📢 Official FTC Disclosure Statement</span>
+                    <p>
+                        Standardized Life is a professional affiliate advertising website designed to recommend exceptional, high-tier apparel and outdoor gear. Clicking the promotional and item links on this platform redirects you to partner merchant portals such as Amazon, private labels, or brand stores. Standardized Life receives a minimal promotional commission for referred traffic and completed checkout sales. This commission maintains our site operation and curation team without generating any auxiliary cost or fee markup on the retail price for our buyers. We remain strictly independent and suggest solely verified items with elevated user feedback.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+                    <p>&copy; 2026 Standardized Life Premium Affiliate Hub. All intellectual rights and design trademarks reserved.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="hover:text-white underline">Privacy Policy</a>
+                        <a href="#" class="hover:text-white underline">Terms & Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Curated list of high-tier products for the affiliate system
+        const products = [
+            {
+                id: 1,
+                name: "Chrono Classic Chronometer",
+                category: "watches",
+                price: 249.00,
+                originalPrice: 389.00,
+                rating: 4.9,
+                reviewsCount: 142,
+                badge: "BEST SELLER",
+                desc: "An incredible automatic mechanical timepiece built with architectural mastery. Features high-grade Japanese automatic movement, a 42-hour power reserve, and a robust scratch-resistant sapphire display lens.",
+                specs: [
+                    "Precision Self-Winding Automatic Caliber",
+                    "Sapphire Crystal Scratch-Proof Protection",
+                    "Surgical Grade 316L Stainless Steel Case",
+                    "Water Resistant up to 100 Meters / 10 ATM"
+                ],
+                affiliateUrl: "https://www.amazon.com/s?k=automatic+mens+chronograph+watch",
+                iconSvg: `<svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                          </svg>`
+            },
+            {
+                id: 2,
+                name: "Tactical Stealth Sport Watch",
+                category: "watches",
+                price: 129.00,
+                originalPrice: 199.00,
+                rating: 4.7,
+                reviewsCount: 88,
+                badge: "RUGGED GEAR",
+                desc: "The ultimate tactical tool built for modern survival. Boasts dual analog-digital time display, custom countdown triggers, a smart compass orientation tool, and high-visibility night luminescence.",
+                specs: [
+                    "Military-Grade Polymer High-Impact Armor",
+                    "Double Reinforced Mineral Dial Glass",
+                    "Dual Time-Zone tracking & Daily Alarms",
+                    "All-Weather Comfort Resin Wristband"
+                ],
+                affiliateUrl: "https://www.amazon.com/s?k=tactical+military+sport+watch",
+                iconSvg: `<svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                          </svg>`
+            },
+            {
+                id: 3,
+                name: "Minimalist Horizon Gold Watch",
+                category: "watches",
+                price: 189.00,
+                originalPrice: 250.00,
+                rating: 4.8,
+                reviewsCount: 95,
+                badge: "LIMITED EDITION",
+                desc: "Sophisticated minimalism refined for contemporary lifestyles. Designed with an ultra-thin gold-plated bezel, high-grain genuine Italian leather strap, and a clear sunray-finished dial layout.",
+                specs: [
+                    "Premium Ultra-Thin 7mm Quartz Case",
+                    "Premium 18K Yellow Gold Ion Plating",
+                    "Eco-Sourced Genuine Calfskin Leather Strap",
+                    "Precision Swiss Caliber Time Keeping"
+                ],
+                affiliateUrl: "https://www.amazon.com/s?k=minimalist+mens+gold+watch",
+                iconSvg: `<svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+                          </svg>`
+            },
+            {
+                id: 4,
+                name: "Aviator Classic Polarized Goggles",
+                category: "goggles",
+                price: 89.00,
+                originalPrice: 140.00,
+                rating: 4.8,
+                reviewsCount: 210,
+                badge: "TIMELESS ICON",
+                desc: "The vintage aviator frame reborn for extreme clarity. Featuring top-grade optical polarization filtering 100% of UVA/UVB rays, custom sweat-resistant double brow bar, and ergonomic nose pads.",
+                specs: [
+                    "UVA/UVB 400 Protective Polarization Filter",
+                    "Ultra-Light flexible Titanium Metal Alloy Frame",
+                    "Impact Resistant Anti-Shatter Polycarbonate Lens",
+                    "Includes Premium Leather Storage Case"
+                ],
+                affiliateUrl: "https://www.amazon.com/s?k=classic+polarized+aviator+sunglasses",
+                iconSvg: `<svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"/>
+                          </svg>`
+            },
+            {
+                id: 5,
+                name: "Urban Wayfarer Matte Black",
+                category: "goggles",
+                price: 75.00,
+                originalPrice: 110.00,
+                rating: 4.6,
+                reviewsCount: 167,
+                badge: "STREET CULTURE",
+                desc: "The go-to companion for dynamic street walks and high contrast styling. Sleek, scratch-proof matte frame surface provides incredible structural durability with modern rectangular geometries.",
+                specs: [
+                    "High Performance Matte-Finish Acetate Build",
+                    "Zero Distortion Optical Contrast Lenses",
+                    "Reinforced Stainless Steel Five-Barrel Hinges",
+                    "Tailored Medium-to-Large Face Configurations"
+                ],
+                affiliateUrl: "https://www.amazon.com/s?k=matte+black+wayfarer+sunglasses",
+                iconSvg: `<svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                          </svg>`
+            },
+            {
+                id: 6,
+                name: "Futuristic Shield Cyber Eye-Shield",
+                category: "goggles",
+                price: 110.00,
+                originalPrice: 165.00,
+                rating: 4.9,
+                reviewsCount: 74,
+                badge: "NEXT GEN",
+                desc: "Bold aesthetics engineered directly for cyber athletes, extreme sports, and high-visibility situations. Wrapping monolithic single-piece lens structure maximizes field of view perfectly.",
+                specs: [
+                    "180 Degree Peripheral Panoramic Vision Lens",
+                    "Water-Repellent & Fog-Resistant Coating Shield",
+                    "Soft Rubber Grip Pads on Nose & Temple Corners",
+                    "Extreme High Velocity Impact Shield Rating"
+                ],
+                affiliateUrl: "https://www.amazon.com/s?k=cyber+sports+shield+sunglasses",
+                iconSvg: `<svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                          </svg>`
+            },
+            {
+                id: 7,
+                name: "Vintage Distressed Cotton Dad Hat",
+                category: "caps",
+                price: 29.00,
+                originalPrice: 45.00,
+                rating: 4.5,
+                reviewsCount: 312,
+                badge: "HERITAGE COMFORT",
+                desc: "An ultra-comfortable vintage cap boasting perfectly faded cotton fabrics. Unstructured crown wraps naturally to your head configuration, securing an authentic off-duty style look.",
+                specs: [
+                    "100% Breathable Combed Organic Cotton",
+                    "Fully Adjustable Antique Brass Clasp Strap",
+                    "Pre-curved Double-Stitch Structured Visor",
+                    "Reinforced Internal Sweatband & Eyelets"
+                ],
+                affiliateUrl: "https://www.amazon.com/s?k=vintage+distressed+dad+cap+hat",
+                iconSvg: `<svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                          </svg>`
+            },
+            {
+                id: 8,
+                name: "Streetwear Trucker Mesh Cap",
+                category: "caps",
+                price: 34.00,
+                originalPrice: 49.00,
+                rating: 4.7,
+                reviewsCount: 118,
+                badge: "HOT RELEASE",
+                desc: "The ultimate modern high-profile trucker layout. Features premium foam front panels, high ventilation technical mesh panels, and robust snapback adjustment mechanism for customizable daily fit.",
+                specs: [
+                    "Structured High-Crown Poly Foam Panel Base",
+                    "Premium Ultra-Ventilated Mesh Grid Rear",
+                    "Premium Retro Adjustable Double Snapback Bar",
+                    "Iconic Modern Standardized Life Signature Front Details"
+                ],
+                affiliateUrl: "https://www.amazon.com/s?k=premium+trucker+mesh+cap+snapback",
+                iconSvg: `<svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                          </svg>`
+            },
+            {
+                id: 9,
+                name: "Performance Waterproof Runner Cap",
+                category: "caps",
+                price: 39.00,
+                originalPrice: 55.00,
+                rating: 4.8,
+                reviewsCount: 89,
+                badge: "ATHLETIC",
+                desc: "Engineered specifically to survive high speed movements and unpredictable weather patterns. Constructed using ultra-thin waterproof technical fabrics that pull sweat cleanly away from your head.",
+                specs: [
+                    "Hydrophobic Waterproof Ripstop Shield Shell",
+                    "Extremely Flexible Visor - Easily Foldable/Packable",
+                    "Laser-Cut Side Ventilation Panels Built-in",
+                    "Reflective Rear Fastener and High-Visibility Striping"
+                ],
+                affiliateUrl: "https://www.amazon.com/s?k=waterproof+running+performance+cap",
+                iconSvg: `<svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                          </svg>`
+            }
+        ];
+
+        // State Management Variables
+        let currentCategory = "all";
+        let wishlist = JSON.parse(localStorage.getItem('standardized_life_wishlist')) || [];
+
+        // Dynamic Loading Init
+        window.onload = function() {
+            renderProducts(products);
+            updateWishlistBadge();
+        };
+
+        // Main Product Render Function
+        function renderProducts(productArray) {
+            const grid = document.getElementById('product-grid');
+            const noResults = document.getElementById('no-results-view');
+            grid.innerHTML = "";
+
+            if (productArray.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+                noResults.classList.add('flex');
+                return;
+            }
+
+            grid.classList.remove('hidden');
+            noResults.classList.add('hidden');
+            noResults.classList.remove('flex');
+
+            productArray.forEach(product => {
+                const isSaved = wishlist.includes(product.id);
+                const discountPercent = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+
+                const productCard = document.createElement('div');
+                productCard.className = "bg-premium-900 border border-premium-800 rounded-2xl p-5 flex flex-col justify-between group hover:border-premium-accent/60 transition-all duration-300 relative hover:shadow-xl hover:shadow-premium-accent/5";
+                
+                productCard.innerHTML = `
+                    <!-- Top Actions & Badges -->
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-[10px] bg-premium-accent/10 text-premium-accent border border-premium-accent/20 px-2 py-0.5 rounded font-bold uppercase tracking-widest">
+                            ${product.badge}
+                        </span>
+                        <button onclick="toggleSaveProduct(${product.id}, event)" class="p-2 bg-premium-950 hover:bg-premium-800 text-neutral-400 hover:text-red-500 rounded-full border border-premium-800 transition-colors" aria-label="Save to wishlist">
+                            <svg class="w-4 h-4 ${isSaved ? 'text-red-500 fill-current' : 'text-neutral-400'}" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Main Graphic & Visual Presentation -->
+                    <div onclick="openProductModal(${product.id})" class="cursor-pointer bg-premium-950 rounded-xl p-6 flex flex-col items-center justify-center border border-premium-800 group-hover:bg-premium-950/40 transition-colors h-48 relative overflow-hidden">
+                        <span class="absolute top-2 left-2 text-[10px] text-green-400 font-semibold bg-green-950/60 border border-green-800/40 px-1.5 py-0.5 rounded">
+                            SAVE ${discountPercent}%
+                        </span>
+                        <div class="text-premium-accent group-hover:scale-110 transition-transform duration-300">
+                            ${product.iconSvg}
+                        </div>
+                    </div>
+
+                    <!-- Meta descriptions -->
+                    <div class="mt-4 flex-grow">
+                        <span class="text-[10px] text-premium-accent uppercase tracking-widest font-semibold">${product.category}</span>
+                        <h3 onclick="openProductModal(${product.id})" class="text-base font-bold text-white mt-1 hover:text-premium-accent cursor-pointer transition-colors leading-snug font-medium">
+                            ${product.name}
+                        </h3>
+
+                        <!-- Rating Stars -->
+                        <div class="flex items-center gap-2 mt-1.5">
+                            <div class="flex text-amber-500 text-xs">
+                                ${generateStarRating(product.rating)}
+                            </div>
+                            <span class="text-[10px] text-neutral-400 font-medium">(${product.reviewsCount} reviews)</span>
+                        </div>
+
+                        <p class="text-xs text-neutral-400 mt-2 line-clamp-2 leading-relaxed">
+                            ${product.desc}
+                        </p>
+                    </div>
+
+                    <!-- Dynamic pricing & Redirect CTA actions -->
+                    <div class="mt-4 pt-4 border-t border-premium-800 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] text-neutral-500 line-through block">$${product.originalPrice.toFixed(2)}</span>
+                            <span class="text-lg font-black text-white">$${product.price.toFixed(2)}</span>
+                        </div>
+                        <button onclick="startAffiliateRedirect(${product.id})" class="bg-premium-accent hover:bg-premium-accentHover text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors inline-flex items-center gap-1.5">
+                            Check Price
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(productCard);
+            });
+        }
+
+        // Star rating helper
+        function generateStarRating(rating) {
+            let starsHtml = "";
+            const floor = Math.floor(rating);
+            for (let i = 0; i < 5; i++) {
+                if (i < floor) {
+                    starsHtml += "★";
+                } else {
+                    starsHtml += "☆";
+                }
+            }
+            return starsHtml;
+        }
+
+        // Real-Time filter implementation
+        function applyFilters() {
+            const searchQuery = document.getElementById('product-search').value.toLowerCase();
+            const sortVal = document.getElementById('sort-select').value;
+            const maxPrice = parseFloat(document.getElementById('price-slider').value);
+
+            let filtered = products.filter(product => {
+                const matchesCategory = (currentCategory === "all" || product.category === currentCategory);
+                const matchesSearch = product.name.toLowerCase().includes(searchQuery) || 
+                                      product.desc.toLowerCase().includes(searchQuery) ||
+                                      product.badge.toLowerCase().includes(searchQuery);
+                const matchesPrice = product.price <= maxPrice;
+                return matchesCategory && matchesSearch && matchesPrice;
+            });
+
+            // Sorting arrays
+            if (sortVal === "price-asc") {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortVal === "price-desc") {
+                filtered.sort((a, b) => b.price - a.price);
+            } else if (sortVal === "rating") {
+                filtered.sort((a, b) => b.rating - a.rating);
+            }
+
+            renderProducts(filtered);
+        }
+
+        // Category Tab triggers
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // Adjust visual tab button styling status
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-premium-accent', 'bg-premium-accent', 'text-white');
+                btn.classList.add('border-premium-800', 'bg-premium-950/40', 'text-neutral-300');
+            });
+
+            const activeBtn = document.getElementById(`btn-cat-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-premium-800', 'bg-premium-950/40', 'text-neutral-300');
+                activeBtn.classList.add('active', 'border-premium-accent', 'bg-premium-accent', 'text-white');
+            }
+
+            applyFilters();
+        }
+
+        // Jump to category and smooth scroll
+        function scrollToFilter(category) {
+            filterCategory(category);
+            const section = document.getElementById('store-listings');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Slider price limits
+        function updatePriceLabel(val) {
+            document.getElementById('price-limit-val').textContent = `$${val}`;
+            applyFilters();
+        }
+
+        // Reset elements to factory defaults
+        function resetFilters() {
+            document.getElementById('product-search').value = "";
+            document.getElementById('sort-select').value = "featured";
+            document.getElementById('price-slider').value = "400";
+            document.getElementById('price-limit-val').textContent = "$400";
+            filterCategory('all');
+        }
+
+        // Curated bundle outfit display helper
+        function quickFilterCombination(idArray) {
+            resetFilters();
+            const filtered = products.filter(product => idArray.includes(product.id.toString()));
+            renderProducts(filtered);
+            document.getElementById('store-listings').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Product detailed specifications View overlay modal
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            document.getElementById('modal-product-name').textContent = product.name;
+            document.getElementById('modal-product-category').textContent = product.category;
+            document.getElementById('modal-product-badge').textContent = product.badge;
+            document.getElementById('modal-product-desc').textContent = product.desc;
+            document.getElementById('modal-product-original-price').textContent = `$${product.originalPrice.toFixed(2)}`;
+            document.getElementById('modal-product-price').textContent = `$${product.price.toFixed(2)}`;
+            document.getElementById('modal-product-icon').innerHTML = product.iconSvg;
+            document.getElementById('modal-product-stars').innerHTML = generateStarRating(product.rating);
+            document.getElementById('modal-product-rating-text').textContent = `${product.rating} (${product.reviewsCount} verified ratings)`;
+
+            // Dynamically output spec checklist
+            const specList = document.getElementById('modal-product-specs');
+            specList.innerHTML = "";
+            product.specs.forEach(spec => {
+                const li = document.createElement('li');
+                li.textContent = spec;
+                specList.appendChild(li);
+            });
+
+            // Set up main outbound click tracking
+            const affBtn = document.getElementById('modal-affiliate-btn');
+            affBtn.setAttribute('onclick', `startAffiliateRedirect(${product.id})`);
+
+            const modal = document.getElementById('product-modal');
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeProductModal() {
+            const modal = document.getElementById('product-modal');
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // Affiliate redirection overlay with security validation
+        function startAffiliateRedirect(productId) {
+            closeProductModal();
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            document.getElementById('redirect-product-name').textContent = product.name;
+            document.getElementById('redirect-product-price').textContent = `$${product.price.toFixed(2)}`;
+            
+            const skipBtn = document.getElementById('skip-countdown-btn');
+            skipBtn.setAttribute('onclick', `directRedirect('${product.affiliateUrl}')`);
+
+            const overlay = document.getElementById('redirect-modal');
+            overlay.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+
+            let countdown = 3;
+            const timerEl = document.getElementById('redirect-countdown');
+            timerEl.textContent = countdown;
+
+            const interval = setInterval(() => {
+                countdown--;
+                timerEl.textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(interval);
+                    directRedirect(product.affiliateUrl);
+                }
+            }, 1000);
+
+            // Store interval reference on overlay to clear if closed
+            overlay.dataset.intervalId = interval;
+        }
+
+        function directRedirect(url) {
+            const overlay = document.getElementById('redirect-modal');
+            if (overlay.dataset.intervalId) {
+                clearInterval(parseInt(overlay.dataset.intervalId));
+            }
+            overlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            
+            // Open affiliate link safely in new context window
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        // Wishlist functionality utilizing secure browser storage
+        function toggleSaveProduct(productId, event) {
+            if (event) event.stopPropagation();
+
+            const idx = wishlist.indexOf(productId);
+            if (idx > -1) {
+                wishlist.splice(idx, 1);
+            } else {
+                wishlist.push(productId);
+            }
+
+            localStorage.setItem('standardized_life_wishlist', JSON.stringify(wishlist));
+            updateWishlistBadge();
+            applyFilters();
+            renderWishlistItems();
+        }
+
+        function updateWishlistBadge() {
+            const badge = document.getElementById('wishlist-badge');
+            const innerCount = document.getElementById('wishlist-count-inner');
+            const count = wishlist.length;
+
+            innerCount.textContent = count;
+
+            if (count > 0) {
+                badge.textContent = count;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function toggleWishlistDrawer() {
+            const drawer = document.getElementById('wishlist-drawer');
+            const isOpen = !drawer.classList.contains('translate-x-full');
+
+            if (isOpen) {
+                drawer.classList.add('translate-x-full');
+                document.body.classList.remove('overflow-hidden');
+            } else {
+                renderWishlistItems();
+                drawer.classList.remove('translate-x-full');
+                document.body.classList.add('overflow-hidden');
+            }
+        }
+
+        function renderWishlistItems() {
+            const container = document.getElementById('wishlist-items-container');
+            container.innerHTML = "";
+
+            if (wishlist.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-neutral-500">
+                        <svg class="w-12 h-12 mx-auto mb-2 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                        <p class="text-xs">No items bookmarked yet.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            wishlist.forEach(id => {
+                const item = products.find(p => p.id === id);
+                if (!item) return;
+
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between p-3.5 bg-premium-950 rounded-xl border border-premium-800 gap-3";
+                row.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-premium-900 border border-premium-800 text-premium-accent rounded-lg flex-shrink-0">
+                            ${item.iconSvg.replace('w-16 h-16', 'w-8 h-8')}
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-white line-clamp-1">${item.name}</h4>
+                            <span class="text-xs text-premium-accent font-bold mt-0.5 block">$${item.price.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="startAffiliateRedirect(${item.id})" class="bg-premium-accent hover:bg-premium-accentHover text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg transition-colors">
+                            Deal &rarr;
+                        </button>
+                        <button onclick="toggleSaveProduct(${item.id})" class="p-1.5 text-neutral-500 hover:text-white transition-colors" aria-label="Remove item">
+                            🗑
+                        </button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function clearAllWishlist() {
+            wishlist = [];
+            localStorage.setItem('standardized_life_wishlist', JSON.stringify(wishlist));
+            updateWishlistBadge();
+            renderWishlistItems();
+            applyFilters();
+        }
+
+        // Responsive Mobile Menu Drawer Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const hamburger = document.getElementById('hamburger-icon');
+            const close = document.getElementById('close-icon');
+
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                hamburger.classList.add('hidden');
+                close.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+                hamburger.classList.remove('hidden');
+                close.classList.add('hidden');
+            }
+        }
+
+        // Email Newsletter submission handler
+        function handleSubscribe(e) {
+            e.preventDefault();
+            document.getElementById('subscribe-email').value = "";
+            const msg = document.getElementById('subscribe-success-msg');
+            msg.classList.remove('hidden');
+            setTimeout(() => {
+                msg.classList.add('hidden');
+            }, 6000);
+        }
+    </script>
+</body>
+</html>
