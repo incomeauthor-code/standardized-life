@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Standardized Life</title>
+    <title>Standardized Life | Premium Watches, Sunglasses & Caps</title>
     
     <!-- Favicon Integration (Loads favicon.png from your GitHub root directory) -->
     <link rel="icon" type="image/png" href="favicon.png">
@@ -59,27 +59,6 @@
             background: #d97706;
         }
     </style>
-    <script>
-        function handleLogoLoaded() {
-            const logo = document.getElementById('custom-logo');
-            const fallbackIcon = document.getElementById('dynamic-logo-icon');
-            const fallbackText = document.getElementById('dynamic-logo-text');
-            
-            if (logo) logo.classList.remove('hidden');
-            if (fallbackIcon) fallbackIcon.classList.add('hidden'); // Hide the generic placeholder icon
-            if (fallbackText) fallbackText.classList.remove('hidden'); // ALWAYS keep the brand text visible beside the logo!
-        }
-
-        function handleLogoError() {
-            const logo = document.getElementById('custom-logo');
-            const fallbackIcon = document.getElementById('dynamic-logo-icon');
-            const fallbackText = document.getElementById('dynamic-logo-text');
-            
-            if (logo) logo.classList.add('hidden');
-            if (fallbackIcon) fallbackIcon.classList.remove('hidden'); // Show the generic placeholder icon as fallback
-            if (fallbackText) fallbackText.classList.remove('hidden'); // Keep the brand text visible
-        }
-    </script>
 </head>
 <body class="bg-premium-950 text-neutral-100 font-sans min-h-screen selection:bg-premium-accent selection:text-white flex flex-col">
 
@@ -91,11 +70,8 @@
                 <!-- Logo Block -->
                 <div class="flex items-center gap-3 cursor-pointer" onclick="resetFilters()">
                     
-                    <!-- 1. DYNAMIC IMAGE LOGO (Auto-detects logo.png in repository) -->
-                    <img id="custom-logo" src="logo.png" alt="Standardized Life Logo" class="h-10 w-auto object-contain hidden" onload="handleLogoLoaded()" onerror="handleLogoError()">
-
-                    <!-- 2. DEFAULT FALLBACK DYNAMIC ICON (Visible only if logo.png doesn't exist) -->
-                    <div id="dynamic-logo-icon" class="w-10 h-10 bg-premium-accent/10 border border-premium-accent/30 rounded-xl flex items-center justify-center text-premium-accent">
+                    <!-- Permanent Geometric Pentagon Logo Icon -->
+                    <div class="w-10 h-10 bg-premium-accent/10 border border-premium-accent/30 rounded-xl flex items-center justify-center text-premium-accent transition-all duration-300 hover:bg-premium-accent/20">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24">
                             <!-- Outer Architectural Pentagon -->
                             <polygon points="12,3 21,9.5 17.5,20 6.5,20 3,9.5" />
@@ -104,8 +80,8 @@
                         </svg>
                     </div>
 
-                    <!-- 3. BRAND TEXT TITLE (Always visible side-by-side with either your custom logo OR fallback icon) -->
-                    <div id="dynamic-logo-text" class="flex flex-col">
+                    <!-- Brand Text Title -->
+                    <div class="flex flex-col">
                         <span class="text-base sm:text-lg font-black tracking-wider text-white leading-none">
                             STANDARDIZED
                         </span>
@@ -634,7 +610,7 @@
                 <!-- Brand Meta -->
                 <div class="md:col-span-4 space-y-4">
                     
-                    <!-- Footer Logo (Adapts if you activate image logo above) -->
+                    <!-- Footer Logo -->
                     <div class="flex items-center gap-2">
                         <span class="text-xl font-black text-white tracking-widest">STANDARDIZED LIFE</span>
                     </div>
@@ -904,18 +880,6 @@
         window.onload = function() {
             renderProducts(products);
             updateWishlistBadge();
-
-            // Run a direct check in case the logo image loaded faster than the DOM or was cached
-            const logoImg = document.getElementById('custom-logo');
-            if (logoImg) {
-                if (logoImg.complete) {
-                    if (logoImg.naturalWidth > 0) {
-                        handleLogoLoaded();
-                    } else {
-                        handleLogoError();
-                    }
-                }
-            }
         };
 
         // Generates UI star systems cleanly
